@@ -1,0 +1,79 @@
+#include <iostream>
+#include<cmath>
+#include <ctime>
+#include <iomanip>    //для stew
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	int mass[1000], minus[500], size, cup, num1, num2;
+	int nom[1000];
+	srand(time(0));
+	cout << "Введите количество эллементов массива" << endl; cin >> size;
+	for (int i = 0; i < size; i++)
+	{
+		mass[i] = rand() % 100;                           //заполнение
+		nom[i] = i;                           //заполнение индексов
+	}
+	cout << "Исходный массив:" << endl;
+	for (int i = 0; i < size; i++)
+	{
+		cout << setw(5) << mass[i] << setw(5); if ((i + 1) % 16 == 0)cout << endl;      //вывод массива
+	}
+	cout << endl << "________________________________________________________________________________" << endl;
+	for (int i = 0; i < size - 1; i++)
+	{
+		for (int j = 0; j < size - i - 1; j++)
+		{
+			if (mass[j] > mass[j + 1])
+			{
+				cup = mass[j];
+				mass[j] = mass[j + 1];
+				mass[j + 1] = cup;                                           // сортир
+				cup = nom[j];
+				nom[j] = nom[j + 1];
+				nom[j + 1] = cup;
+			}
+		}
+	}
+	cout << "Отсортированный массив:" << endl;
+	for (int i = 0; i < size; i++)
+	{
+		cout << setw(5) << mass[i] << setw(5); if ((i + 1) % 16 == 0)cout << endl;      //вывод массива
+	}
+	cout << endl << "________________________________________________________________________________" << endl;
+	cout << endl << "Индексы элементов после сортировки" << endl;
+	for (int i = 0; i < size; ++i)
+	{
+		cout << setw(5) << nom[i]; if ((i + 1) % 16 == 0)cout << endl;  //индексы
+     }                         
+	cout <<endl<< "________________________________________________________________________________" << endl;
+	for (int i = 0; i <size-1; i++)
+	{
+		minus[i]=abs(mass[i] - mass[i+1]);      //вывод массива
+		//cout << " " <<minus[i]<< " ";
+	}
+	int min = minus[0];
+	for (int i = 0; i < size - 1; ++i)
+	{
+		if (minus[i] < min)
+		{
+			min = minus[i];
+			num1 = nom[i];            //нахождение минимальной суммы
+			num2 = nom[i + 1];
+		}
+	}
+	cout<<"Если в массиве несколько эллементов имеют одинаковую разность, то программа выведет индексы всех этих эллементов" << endl;
+	for (int i = 0; i < size - 1; ++i)
+	{
+		if (minus[i] == min)
+		{
+			cout << "Индекс 1: " << nom[i] << endl;
+			cout << "Индекс 2: " << nom[i+1] << endl;        //проверка на повторы минимальной суммы
+			cout << "________________________________________________________________________________" << endl;
+		}
+	}
+	cout << endl;
+	system("pause");
+	return 0;
+}
